@@ -1,0 +1,4 @@
+version: '3'
+services:
+  web:
+    command: ["gunicorn", "-b", ":8000", "myapp.wsgi:application"]
