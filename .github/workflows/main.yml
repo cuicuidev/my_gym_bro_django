@@ -18,7 +18,7 @@ jobs:
 
     # Pull request on 'main'
     - name: Build and Run Production Containers
-      if: github.event_name == 'pull_request' && github.ref == 'refs/heads/main'
+      if: github.event_name == 'pull_request' && github.base_ref == 'main'
       run: |
         docker-compose up -d --build
 
