@@ -4,8 +4,8 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
-    container_name: "app"
+      dockerfile: Dockerfile.dev
+    container_name: "app_dev"
     ports:
       - "8000:8000"
     volumes:
@@ -14,7 +14,7 @@ services:
       - database
   database:
     image: postgres:15.4
-    container_name: "database"
+    container_name: "database_dev"
 
     volumes:
       - database:/var/lib/postgresql/data
