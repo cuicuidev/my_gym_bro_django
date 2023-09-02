@@ -3,6 +3,7 @@
 
 *.pem
 *.env*
+/staticfiles/
 
 __pycache__/
 
