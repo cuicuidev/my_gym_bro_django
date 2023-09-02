@@ -1,6 +1,9 @@
 /.venv/
 /.github/
 
+*.pem
+*.env*
+
 __pycache__/
 
 *.sqlite3
