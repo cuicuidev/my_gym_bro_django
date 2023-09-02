@@ -8,6 +8,15 @@ on:
     branches:
       - main
 
+env: # Adding the non-sensitive .env.dev values here
+  DEBUG: True
+  POSTGRES_DB: database
+  POSTGRES_USER: root
+  POSTGRES_PASSWORD: debug
+  DJANGO_SECRET_KEY: django-insecure-*5-o#x+753^jm&0w@25pjim9h_w%bi=-j3b6x@4moye215*r-+
+  RSA_PRIVATE_KEY_PATH: private_key.pem
+  RSA_PUBLIC_KEY_PATH: public_key.pem
+
 jobs:
   build-and-run:
     runs-on: ubuntu-latest
@@ -20,10 +29,19 @@ jobs:
     - name: Build and Run Production Containers
       if: github.event_name == 'pull_request' && github.base_ref == 'main'
       run: |
+        echo "${{ secrets.PROD_RSA_PRIVATE_KEY }}" > private_key.pem
+        echo "${{ secrets.PROD_RSA_PUBLIC_KEY }}" > public_key.pem
         docker-compose up -d --build
+      env: # Override environment variables with GitHub Secrets
+        POSTGRES_DB: ${{ secrets.PROD_POSTGRES_DB }}
+        POSTGRES_USER: ${{ secrets.PROD_POSTGRES_USER }}
+        POSTGRES_PASSWORD: ${{ secrets.PROD_POSTGRES_PASSWORD }}
+        DJANGO_SECRET_KEY: ${{ secrets.PROD_DJANGO_SECRET_KEY }}
+        RSA_PRIVATE_KEY_PATH: private_key.pem
+        RSA_PUBLIC_KEY_PATH: public_key.pem
+
 
     # Push to 'dev'
     - name: Build and Run Development Containers
       if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
-      run: |
-        docker-compose -f docker-compose.dev.yml up -d --build
+      run: docker-compose -f docker-compose.dev.yml up -d --build

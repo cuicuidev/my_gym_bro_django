@@ -8,6 +8,12 @@ services:
     container_name: "app_dev"
     ports:
       - "8000:8000"
+
+    environment:
+      - DEBUG=${DEBUG}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - RSA_PRIVATE_KEY_PATH=${RSA_PRIVATE_KEY_PATH}
+      - RSA_PUBLIC_KEY_PATH=${RSA_PUBLIC_KEY_PATH}
     volumes:
       - .:/app
     depends_on:
@@ -22,9 +28,9 @@ services:
       - "5432:5432"
 
     environment:
-      - POSTGRES_DB=database
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=debug
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 
 volumes:
   database:
