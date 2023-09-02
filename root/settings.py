@@ -11,10 +11,13 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 PRIVATE_KEY_PATH = os.environ.get('RSA_PRIVATE_KEY_PATH')
 PUBLIC_KEY_PATH = os.environ.get('RSA_PUBLIC_KEY_PATH')
 
-with open(PRIVATE_KEY_PATH) as f:
+print(PRIVATE_KEY_PATH)
+print(PUBLIC_KEY_PATH)
+
+with open(PRIVATE_KEY_PATH, 'br') as f:
     PRIVATE_KEY = f.read()
 
-with open(PUBLIC_KEY_PATH) as f:
+with open(PUBLIC_KEY_PATH, 'br') as f:
     PUBLIC_KEY = f.read()
 
 
@@ -116,6 +119,6 @@ SIMPLE_JWT = {
     "BLACKLIST_AFTER_ROTATION": True,
 
     "ALGORITHM": "RS:512",
-    "SIGNING_KEY": PUBLIC_KEY,
-    "VERIFYING_KEY": PRIVATE_KEY,
+    "SIGNING_KEY": PRIVATE_KEY,
+    "VERIFYING_KEY": PUBLIC_KEY,
 }

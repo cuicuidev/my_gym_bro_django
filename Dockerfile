@@ -8,8 +8,6 @@ RUN pip install gunicorn==21.2.0
 
 COPY . .
 
-RUN python manage.py collectstatic --noinput
-
 
 EXPOSE 8000
 
