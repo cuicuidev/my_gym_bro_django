@@ -8,16 +8,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
-PRIVATE_KEY_PATH = os.environ.get('RSA_PRIVATE_KEY_PATH')
-PUBLIC_KEY_PATH = os.environ.get('RSA_PUBLIC_KEY_PATH')
-
-print(PRIVATE_KEY_PATH)
-print(PUBLIC_KEY_PATH)
-
-with open(PRIVATE_KEY_PATH, 'br') as f:
+with open('key', 'br') as f:
     PRIVATE_KEY = f.read()
 
-with open(PUBLIC_KEY_PATH, 'br') as f:
+with open('key.pub', 'br') as f:
     PUBLIC_KEY = f.read()
 
 
