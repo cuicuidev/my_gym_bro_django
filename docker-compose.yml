@@ -2,12 +2,19 @@ version: '3.9'
 
 services:
   app:
+    container_name: "app"
+
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: "app"
+
     ports:
       - "8000:8000"
+
+    volumes:
+      - ./app:/app
+
+    command: sh -c "python manage.py runserver 0.0.0.0:8000"
 
     environment:
       - DEBUG=${DEBUG}
@@ -15,8 +22,7 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    volumes:
-      - .:/app
+
     depends_on:
       - database
   database:

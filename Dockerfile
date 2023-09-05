@@ -1,14 +1,25 @@
-FROM python:3.11.4
+FROM python:3.11-alpine3.18
 
+ENV PATH="/scripts:${PATH}"
+
+COPY ./requirements.txt /requirements.txt
+RUN apk add --update --no-cache --virtual .tmp gcc libc-dev linux-headers postgresql-dev
+RUN pip install -r /requirements.txt
+RUN apk del .tmp
+
+RUN mkdir /app
+COPY ./app /app
 WORKDIR /app
 
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install gunicorn==21.2.0
+COPY ./scripts /scripts
+RUN chmod +x /scripts/*
 
-COPY . .
+RUN mkdir -p /vol/web/media
+RUN mkdir -p /vol/web/static
 
+RUN adduser -D user
+RUN chown -R user:user /vol
+RUN chmod -R 755 /vol/web
+USER user
 
-EXPOSE 8000
-
-CMD ["gunicorn", "root.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["entrypoint.sh"]
