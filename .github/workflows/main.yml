@@ -31,7 +31,7 @@ jobs:
         echo "${{ secrets.PROD_RSA_PUBLIC_KEY }}" | base64 -d > key.pub
         chmod 600 key
         chmod 644 key.pub
-        docker-compose up -d --build
+        docker-compose -f docker-compose.prod.yml up -d --build
       env: # Override environment variables with GitHub Secrets
         POSTGRES_DB: ${{ secrets.PROD_POSTGRES_DB }}
         POSTGRES_USER: ${{ secrets.PROD_POSTGRES_USER }}
@@ -42,4 +42,4 @@ jobs:
     # Push to 'dev'
     - name: Build and Run Development Containers
       if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
-      run: docker-compose -f docker-compose.dev.yml up -d --build
+      run: docker-compose up -d --build
