@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export DEBUG=True
+export DEBUG=1
 export POSTGRES_DB=database
 export POSTGRES_USER=root
 export POSTGRES_PASSWORD=debug

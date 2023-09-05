@@ -9,7 +9,6 @@ on:
       - main
 
 env: # Adding the non-sensitive .env.dev values here
-  DEBUG: True
   POSTGRES_DB: database
   POSTGRES_USER: root
   POSTGRES_PASSWORD: debug
@@ -27,11 +26,11 @@ jobs:
     - name: Build and Run Production Containers
       if: github.event_name == 'pull_request' && github.base_ref == 'main'
       run: |
-        echo "${{ secrets.PROD_RSA_PRIVATE_KEY }}" | base64 -d > key
-        echo "${{ secrets.PROD_RSA_PUBLIC_KEY }}" | base64 -d > key.pub
-        chmod 600 key
-        chmod 644 key.pub
-        docker-compose -f docker-compose.prod.yml up -d --build
+        echo "${{ secrets.PROD_RSA_PRIVATE_KEY }}" | base64 -d > app/key
+        echo "${{ secrets.PROD_RSA_PUBLIC_KEY }}" | base64 -d > app/key.pub
+        chmod 600 app/key
+        chmod 644 app/key.pub
+        docker-compose -f docker-compose-deploy.yml up -d --build
       env: # Override environment variables with GitHub Secrets
         POSTGRES_DB: ${{ secrets.PROD_POSTGRES_DB }}
         POSTGRES_USER: ${{ secrets.PROD_POSTGRES_USER }}
