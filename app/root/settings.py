@@ -14,10 +14,12 @@ with open('key', 'br') as f:
 with open('key.pub', 'br') as f:
     PUBLIC_KEY = f.read()
 
-
-DEBUG = os.environ.get('DEBUG')
+DEBUG = bool(int(os.environ.get('DEBUG', 0)))
 
 ALLOWED_HOSTS = []
+ALLOWED_HOSTS_ENV = os.environ.get('ALLOWED_HOSTS')
+if ALLOWED_HOSTS_ENV:
+    ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -101,8 +103,11 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+STATIC_ROOT = '/vol/web/static'
+MEDIA_ROOT = '/vol/web/media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
