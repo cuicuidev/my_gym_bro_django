@@ -1,6 +1,7 @@
 /.venv/
 
 /staticfiles/
+migrations/
 
 __pycache__/
 

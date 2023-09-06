@@ -31,6 +31,9 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
+
+    'api',
 ]
 
 REST_FRAMEWORK = {
@@ -117,7 +120,7 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
 
-    "ALGORITHM": "RS:512",
+    "ALGORITHM": "RS512",
     "SIGNING_KEY": PRIVATE_KEY,
     "VERIFYING_KEY": PUBLIC_KEY,
 }

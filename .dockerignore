@@ -1,6 +1,8 @@
 /.venv/
 /.github/
 
+migrations/
+
 *.pem
 *.env*
 /staticfiles/
